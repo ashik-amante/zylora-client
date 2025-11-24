@@ -5,6 +5,8 @@ import CategoryPage from "../pages/Category/CategoryPage";
 import Search from "../pages/Search/Search";
 import ShopPage from "../pages/Shop/ShopPage/ShopPage";
 import ProductDetails from "../pages/Shop/ProductDetails/ProductDetails";
+import LogIn from "../components/LogIn";
+import RegisterForm from "../components/Register";
 
 
 const router = createBrowserRouter([
@@ -33,5 +35,13 @@ const router = createBrowserRouter([
             },
         ]
     },
+    {
+        path: '/login',
+        element: <LogIn/>
+    },
+    {
+        path: '/register',
+        element: <RegisterForm/>
+    }
 ]);
 export default router
