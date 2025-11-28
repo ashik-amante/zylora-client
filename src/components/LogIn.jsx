@@ -1,15 +1,31 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router';
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router';
+import { useLoginUserMutation } from '../redux/features/auth/authApi';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate()
 
-  const handleSubmit = (e) => {
+  const dispatch = useDispatch()
+  const [loginUser,{isLoading}] = useLoginUserMutation()
+  console.log(loginUser);
+
+
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    // Here you would typically send the email and password to your authentication API
+    const data = { email,password}
     console.log('Attempting to log in with:', { email, password });
-    // Example: call an API function like auth.login(email, password);
+    
+    try {
+      const response = await loginUser(data).unwrap()
+      console.log(response);
+      alert('login successful')
+      navigate('/')
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

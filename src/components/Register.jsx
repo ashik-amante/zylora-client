@@ -1,16 +1,27 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
+import { useRegisterUserMutation } from '../redux/features/auth/authApi';
 
 const RegisterForm = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e) => {
+  const [registerUser] = useRegisterUserMutation()
+  const navigate = useNavigate()
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Here you would typically send the username, email, and password to your registration API
+    const data = { email, password, username }
     console.log('Attempting to register with:', { username, email, password });
-    // Example: call an API function like auth.register(username, email, password);
+    try {
+      const response = await registerUser(data).unwrap()
+      console.log(response);
+      alert('register successfull')
+      navigate('/login')
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
