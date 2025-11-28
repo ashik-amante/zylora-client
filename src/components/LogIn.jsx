@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router';
 import { useLoginUserMutation } from '../redux/features/auth/authApi';
+import { setUser } from '../redux/features/auth/authSlice';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
@@ -21,6 +22,9 @@ const LoginForm = () => {
     try {
       const response = await loginUser(data).unwrap()
       console.log(response);
+      const {token,user} = response
+      console.log(token,user);
+      dispatch(setUser({user}))
       alert('login successful')
       navigate('/')
     } catch (error) {
